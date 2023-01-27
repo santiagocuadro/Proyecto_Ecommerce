@@ -1,0 +1,65 @@
+[
+   {
+      "timestamp": "1/11/2022 21:07:45",
+      "products": [
+         {
+            "nombre": "nuevo4",
+            "descripcion": "este es el nuevo elemento 4",
+            "codigo": 1234,
+            "foto": "asdfsfdasdfa",
+            "precio": 500234432100,
+            "stock": 535,
+            "timestamp": "1/11/2022 22:07:26",
+            "id": 3
+         },
+         {
+            "nombre": "santi",
+            "descripcion": "hola",
+            "codigo": 1234,
+            "foto": "foto",
+            "precio": 50000,
+            "stock": 55,
+            "timestamp": "1/11/2022 21:58:42",
+            "id": 10
+         }
+      ],
+      "id": 1
+   },
+   {
+      "timestamp": "1/11/2022 21:07:46",
+      "products": [],
+      "id": 2
+   },
+   {
+      "timestamp": "1/11/2022 21:07:47",
+      "products": [],
+      "id": 3
+   },
+   {
+      "timestamp": "1/11/2022 21:07:48",
+      "products": [
+         null
+      ],
+      "id": 4
+   },
+   {
+      "timestamp": "1/11/2022 21:07:48",
+      "products": [],
+      "id": 5
+   },
+   {
+      "timestamp": "2/11/2022 16:47:11",
+      "products": [],
+      "id": 6
+   },
+   {
+      "timestamp": "2/11/2022 16:47:12",
+      "products": [],
+      "id": 7
+   },
+   {
+      "timestamp": "2/11/2022 16:47:13",
+      "products": [],
+      "id": 8
+   }
+]
