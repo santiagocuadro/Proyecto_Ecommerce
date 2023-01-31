@@ -3,11 +3,13 @@ import passport from "passport";
 import { ProductDao } from '../../Dao/index.js';
 import Authenticated from '../../middlewares/authenticated.js';
 import { DATE_UTILS } from '../../utils/date-utils.js';
+import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
 
 router.post("/register", passport.authenticate("register", { failureRedirect: "/failregister" }), (req, res) => {
+
   res.redirect("/");
 });
 
@@ -47,15 +49,16 @@ router.post('/productos', async (req, res) => {
     const { title, description, code, thumbnail, price, stock } = req.body;
     const product = { title, description, code, thumbnail, price, stock, timestamp:DATE_UTILS.getTimestamp() };
     await ProductDao.save(product);
-    const productos = await ProductDao.getAll();
+    const products = await ProductDao.getAll();
 
-    res.render('view/home', { productos: productos, username: req.user.username });
+    res.render('view/home', { productos: products, username: req.user.username });
     res.status(200);
   } catch (error) {
     console.log(`Error ${error}`);
     res.status(404);
   }
 });
+
 
 
 export { router as routerSession } 

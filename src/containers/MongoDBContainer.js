@@ -6,7 +6,7 @@ class MongoDBContainer {
   }
 
   async getAll() {
-    const response = await this.model.find();
+    const response = await this.model.find({}).lean();
     return response;
   }
 

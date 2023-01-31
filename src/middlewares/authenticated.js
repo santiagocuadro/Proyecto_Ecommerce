@@ -1,7 +1,9 @@
+import {ProductDao} from '../Dao/index.js';
 
-const Authenticated = (req, res, next) => {
+const Authenticated = async (req, res, next) => {
 	if (req.isAuthenticated()){
-		return res.render("view/home", { username: req.user.username });
+		const productos = await ProductDao.getAll();
+		return res.render("view/home", { productos: productos, username: req.user.username });
 	}
 	next()
 }

@@ -1,11 +1,10 @@
 import express from "express";
-import { CartDao } from "../../Dao/index.js";
-import { ProductDao } from "../../Dao/index.js";
+import { ProductDao, CartDao } from "../../Dao/index.js";
 import { DATE_UTILS } from "../../utils/index.js";
 
 const router = express.Router();
 
-// Crea un carrito y devuelve su id 
+// Crea un carrito y devuelve su id
 router.post("/", async (req, res) => {
   try {
     const baseCart = { timestamp: DATE_UTILS.getTimestamp(), products: [] };

@@ -21,6 +21,7 @@
     "express-session": "^1.17.3",
     "firebase-admin": "^11.3.0",
     "mongoose": "^6.7.3",
+    "nodemailer": "^6.9.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0"
   },

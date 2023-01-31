@@ -8,6 +8,11 @@ const config = {
   SERVER: {
     PORT: process.env.PORT || 8080,
     SELECTED_DATABASE: process.env.SELECTED_DB ?? "memory",
+    CLIENT: {
+      auth:"",
+      pass:"",
+      cel:"+59899098409"
+    }
   },
   DATABASES: {
     filesystem: {
