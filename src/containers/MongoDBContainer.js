@@ -5,6 +5,10 @@ class MongoDBContainer {
     this.model = mongoose.model(name, schema);
   }
 
+  async getModel(){
+    return this.model;
+  }
+
   async getAll() {
     const response = await this.model.find({}).lean();
     return response;
@@ -17,7 +21,11 @@ class MongoDBContainer {
 
   async getById(id) {
     const response = await this.model.findById(id);
+    return response;
+  }
 
+  async getOne(options) {
+    const response = await this.model.findOne(options).lean().exec();
     return response;
   }
 

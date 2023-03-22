@@ -69,10 +69,16 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each carrito}}
+                {{#each carrito.products}}
                 <tr>
-                    <td> {{this.}} </td>
-
+                    <td> {{this.title}} </td>
+                    <td> {{this.description}} </td>
+                    <td> {{this.code}} </td>
+                    <td> <img style="height: 3rem;" src="{{this.thumbnail}}" alt="imagen producto"> </td>
+                    <td> {{this.price}} </td>
+                    <td> {{this.stock}} </td>
+                    <td> {{this.timestamp}} </td>
+                    <td> <button class="btn btn-warning float-right mt-2" method="POST" onclick="location.href='/productos'">agregar</button> </td>
                 </tr>
                 {{/each}}
             </tbody>
