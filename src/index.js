@@ -1,17 +1,13 @@
 import express from "express";
 import passport from 'passport';
 import session from "express-session";
-// import { Strategy as LocalStrategy } from 'passport-local';
-// import * as strategy from './middlewares/strategy.js';
 import {engine} from 'express-handlebars';
 import { routerProducts, routerCarrito, routerSession } from "./Routes/index.js";
 import { config } from './config/index.js';
-// import { UserDao } from "./Dao/index.js";
-import MongoStore from 'connect-mongo';
 import { PassportAuth } from './middlewares/strategy.js';
+import cookieParser from "cookie-parser";
 
 const PORT = config.SERVER.PORT;
-const MONGO_DB_URI = config.DATABASES.mongo.url;
 const app = express();
 
 app.use(express.json());
@@ -27,21 +23,16 @@ app.engine(
 app.set("view engine", "hbs");
 app.set('views', './public');
 
-app.use(express.static("public"));
+// app.use(express.static("public"));
+
+app.use(cookieParser());
 
 app.use(
   session({
-    store: MongoStore.create({
-      mongoUrl: MONGO_DB_URI,
-      ttl: 600,
-    }),
     secret:'secret',
     resave: false,
     saveUninitialized: false,
     rolling: false,
-    cookie: {
-      maxAge: 600000,
-    }
   })
 );
 

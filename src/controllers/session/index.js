@@ -1,8 +1,8 @@
 import { ProductDao, UserDao, CartDao } from '../../Dao/index.js';
 import { DATE_UTILS } from '../../utils/date-utils.js';
+import { JWT_UTILS } from '../../utils/jwt-utils.js';
 import bCrypt from "bcrypt";
-// import { CartController } from '../../controllers/index.js';
-// import nodemailer from 'nodemailer';
+import { enviarEmail } from '../../utils/nodemailer.js';
 
 
 const createHash = function (password) {
@@ -25,13 +25,21 @@ const postRegister = async (req, res) => {
       const telephone = datos.telephone;
       const avatar = datos.avatar;
 
+      const datosEmail = { email, name, age, direction, telephone };
+
+
+      //Creo un carrito para guardarlo al usuario
 			const baseCart = { timestamp: DATE_UTILS.getTimestamp(), products: [] };
     	const cart = await CartDao.save(baseCart);
 			
       await UserDao.save({ email, password, name, age, direction, telephone, avatar, cart });
-			console.log(cart);
+      
+      
+      enviarEmail(datosEmail);
 			
 			//Enviar email con info del usuario creado
+
+
 
       res.redirect("/");
     }
@@ -43,6 +51,11 @@ const postRegister = async (req, res) => {
 
 
 const postLogin = (req, res) => {
+  const { user } = req;
+
+  const token = JWT_UTILS.createToken(user, "secret");
+
+  res.cookie("tokenCookie", token, { maxAge: 1000 * 60 * 60 });
   res.redirect("/");
 }
 
@@ -55,9 +68,10 @@ const getLogin = (req, res) => {
 }
 
 const getLogout = (req, res) => {
-  const { name } = req.user;
+  const { email } = req.user;
   req.logOut({}, () => true);
-  res.render("view/logout", { name: name });
+  res.clearCookie("tokenCookie");
+  res.render("view/logout", { name: email });
 }
 
 const getRegister = async (req, res) => {

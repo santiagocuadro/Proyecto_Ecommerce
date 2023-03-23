@@ -1,10 +1,11 @@
 import express from "express";
 import { verifyRole } from "../../middlewares/verifyRole.js";
+import { isValidAuthToken } from "../../middlewares/auth.js";
 import { ProductController } from '../../controllers/index.js';
 
 const router = express.Router();
 
-router.get("/", ProductController.getAll);
+router.get("/", isValidAuthToken, ProductController.getAll);
 
 // Me permite listar todos los productos disponibles o un producto por su id
 // (disponible para usuarios y administradores)
