@@ -48,7 +48,7 @@
                     <td> {{this.price}} </td>
                     <td> {{this.stock}} </td>
                     <td> {{this.timestamp}} </td>
-                    <td> <button class="btn btn-warning float-right mt-2" method="POST" onclick="location.href='/productos'">agregar</button> </td>
+                    <td> <button class="btn btn-warning float-right mt-2" id="btnAgregar">agregar</button> </td>
                 </tr>
                 {{/each}}
             </tbody>
@@ -58,18 +58,25 @@
     </section>
 
     <section class="mt-5">
-        <h2 class="text-danger">Productos guardados en el carrito</h2>
+        <h2 class="text-danger">Productos agregados al carrito</h2>
         {{#unless carrito}}
         <h4 class="text-bg-danger p-3">no se encontraron datos</h4>
         {{else}}
         <table class="table table-dark">
             <thead>
                 <tr class="text-warning">
-                    <th>productos de carrito</th>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Codigo</th>
+                    <th>Foto</th>
+                    <th>Precio</th>
+                    <th>stock</th>
+                    <th>Fecha de creacion</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                {{#each carrito.products}}
+                {{#each carrito}}
                 <tr>
                     <td> {{this.title}} </td>
                     <td> {{this.description}} </td>
@@ -78,7 +85,7 @@
                     <td> {{this.price}} </td>
                     <td> {{this.stock}} </td>
                     <td> {{this.timestamp}} </td>
-                    <td> <button class="btn btn-warning float-right mt-2" method="POST" onclick="location.href='/productos'">agregar</button> </td>
+                    <td> <button class="btn btn-warning float-right mt-2" method="POST" onclick="location.href='/productos'">eliminar</button> </td>
                 </tr>
                 {{/each}}
             </tbody>
@@ -87,3 +94,5 @@
         {{/unless}}
     </section>
 </div>
+
+<script src="../js/index.js" type="module"></script>

@@ -22,6 +22,10 @@ const config = {
       dbName: process.env.MONGO_DB_NAME,
     },
   },
+  EMAIL: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD
+  }
 };
 
 export { config };

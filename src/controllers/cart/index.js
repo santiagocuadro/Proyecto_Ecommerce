@@ -1,18 +1,16 @@
-import { CartDao } from '../../Dao/index.js';
-import {
-	DATE_UTILS, 
-	ERRORS_UTILS } from '../../utils/index.js';
+import { CartDao, ProductDao } from '../../Dao/index.js';
+import { DATE_UTILS } from '../../utils/index.js';
 
 
-const getAll = async () => {
+const getAll = async (req, res) => {
 	try {
     const { id } = req.params;
-    const cart = await CartDao.getById(Number(id));
+    const cart = await CartDao.getById(id);
     const products = cart.products;
 
-    res.status(200).send({success: true, productos: products})
+    res.status(200).send({ success: true, productos: products })
   } catch (error) {
-    res.status(404).send({error: ERRORS_UTILS.MESSAGES.NO_CART})
+    res.status(404).send({success: false})
   }
 };
 
@@ -42,25 +40,27 @@ const addProductToCart = async (req, res) => {
   try {
     const { productId } = req.body;
     const { id } = req.params;
-    const cart = await CartDao.getById(Number(id));
+    const cart = await CartDao.getById(id);
 
     if (!cart) {
-      return res.send({ success: false, message: "carrito vacio" });
+      console.log(cart.id);
+      return res.send({ success: false, message: "No existe este carrito" });
     }
 
-    const product = await ProductDao.getById(Number(productId));
+    const product = await ProductDao.getById(productId);
 
     if (!product) {
       return res.status(400).send({ success: false, message: "lista de productos vacia" });
     }
 
     cart.products.push(product);
+    console.log('estoy aca')
 
-    const updatedCart = await CartDao.updateById(Number(id), cart);
+    const updatedCart = await CartDao.updateById(id, cart);
 
     res.status(200).send({ success: true, cart: updatedCart });
   } catch (error) {
-    res.status(400).send({ success: false, cart: updatedCart });
+    res.status(400).send({ success: false });
   }
 }
 

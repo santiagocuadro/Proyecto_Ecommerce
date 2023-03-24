@@ -4,8 +4,10 @@ import { JWT_UTILS } from "../utils/jwt-utils.js";
 const isValidAuthToken = async (req, res, next) => {
   try {
     const { tokenCookie } = req.cookies;
+    console.log(tokenCookie);
 
     if (!tokenCookie) {
+      console.log('error aca')
       throw new Error("Unauthorized");
     }
 

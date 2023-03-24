@@ -27,20 +27,15 @@ const postRegister = async (req, res) => {
 
       const datosEmail = { email, name, age, direction, telephone };
 
-
       //Creo un carrito para guardarlo al usuario
 			const baseCart = { timestamp: DATE_UTILS.getTimestamp(), products: [] };
     	const cart = await CartDao.save(baseCart);
 			
-      await UserDao.save({ email, password, name, age, direction, telephone, avatar, cart });
+      await UserDao.save({ email, password, name, age, direction, telephone, avatar, cart: cart });
       
-      
+			//Enviar email con info del usuario creado
       enviarEmail(datosEmail);
 			
-			//Enviar email con info del usuario creado
-
-
-
       res.redirect("/");
     }
   } catch (error) {
@@ -56,6 +51,7 @@ const postLogin = (req, res) => {
   const token = JWT_UTILS.createToken(user, "secret");
 
   res.cookie("tokenCookie", token, { maxAge: 1000 * 60 * 60 });
+
   res.redirect("/");
 }
 
@@ -68,10 +64,10 @@ const getLogin = (req, res) => {
 }
 
 const getLogout = (req, res) => {
-  const { email } = req.user;
+  const { user } = req;
   req.logOut({}, () => true);
   res.clearCookie("tokenCookie");
-  res.render("view/logout", { name: email });
+  res.render("view/logout", { name: user.name });
 }
 
 const getRegister = async (req, res) => {
@@ -93,7 +89,10 @@ const postProductos = async (req, res) => {
     await ProductDao.save(product);
     const products = await ProductDao.getAll();
 
-    res.status(200).render('view/home', { productos: products, username: req.user.username });
+    const { user } = req;
+    const carrito = await CartDao.getById(user.cart);
+
+    res.status(200).render('view/home', { productos: products, username: user.name, carrito: carrito.products });
   } catch (error) {
     console.log(`Error ${error}`);
     res.status(404);

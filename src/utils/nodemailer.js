@@ -1,12 +1,13 @@
 import nodemailer from 'nodemailer';
+import { config } from '../config/index.js';
 
 const enviarEmail = async (datos) => {
 	const transporter = nodemailer.createTransport({
 		service: 'gmail',
 		port: 587,
 		auth: {
-			user: 'santicua2000@gmail.com',
-			pass: 'rwdkwvgrzekcvbme'
+			user: config.EMAIL.user,
+			pass: config.EMAIL.pass
 		}
 })
 	const email = {
@@ -23,4 +24,11 @@ const enviarEmail = async (datos) => {
 	}
 }
 
-export { enviarEmail };
+const enviarWpp = () => {
+
+}
+
+export { 
+	enviarEmail,
+	enviarWpp 
+};
