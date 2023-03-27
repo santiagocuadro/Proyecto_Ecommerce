@@ -13,9 +13,9 @@ router.delete("/:id", CartController.delateCart);
 router.get("/:id/productos", CartController.getAll);
 
 // Para incorporar productos al carrito por su id de producto
-router.post("/:id/productos", CartController.addProductToCart);
+router.post("/productos", CartController.addProductToCart);
 
 // Elimina un producto del carrito por su id de carrito y de producto 
-router.delete("/:id/productos/:id_prod", CartController.delateProduct);
+router.delete("/productos/:id_prod", CartController.delateProduct);
 
 export { router as routerCarrito };

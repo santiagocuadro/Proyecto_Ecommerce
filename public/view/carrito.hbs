@@ -1,0 +1,75 @@
+<div class="container bg-light p-4">
+
+	<div class="container mt-3">
+			<h1 class="alert alert-success">
+					Bienvenido, 
+					{{ username }}
+
+							<button class="btn btn-warning float-right mt-2" onclick="location.href='/logout'">
+									Desloguear
+							</button>
+							<button class="btn btn-warning float-right mt-2" onclick="location.href='/'">
+									Volver a ver productos
+							</button>
+			</h1>
+	</div>
+
+	<section class="mt-5">
+		<h2 class="text-danger">Productos agregados al carrito</h2>
+		{{#unless carrito}}
+		<h4 class="text-bg-danger p-3">no se encontraron datos</h4>
+		{{else}}
+		<table class="table table-dark">
+				<thead>
+						<tr class="text-warning">
+								<th>Nombre</th>
+								<th>Descripcion</th>
+								<th>Codigo</th>
+								<th>Foto</th>
+								<th>Precio</th>
+								<th>stock</th>
+								<th>Fecha de creacion</th>
+								<th></th>
+						</tr>
+				</thead>
+				<tbody>
+						{{#each carrito}}
+						<tr>
+								<td> {{this.title}} </td>
+								<td> {{this.description}} </td>
+								<td> {{this.code}} </td>
+								<td> <img style="height: 3rem;" src="{{this.thumbnail}}" alt="imagen producto"> </td>
+								<td> {{this.price}} </td>
+								<td> {{this.stock}} </td>
+								<td> {{this.timestamp}} </td>
+								<td> <button class="btn btn-warning float-right mt-2" onclick='deleteCart(event)' value="{{this._id}}">eliminar</button> </td>
+						</tr>
+						{{/each}}
+				</tbody>
+
+		</table>
+		{{/unless}}
+	</section>
+	<button class="btn btn-warning float-right mt-2" onclick="location.href='/carritoPedido'" >Realizar pedido</button>
+
+</div>
+
+<script>
+	async function deleteCart(event) {
+		event.preventDefault();
+
+		const id_prod = event.target.value;
+
+		const response = await fetch(`/api/carrito/productos/${id_prod}`, {
+			method: "DELETE",
+			headers: {
+				'Content-Type': 'application/json'
+      },
+		});
+		
+		//if(response.status === 200){
+		//	return window.location.replace("/carrito");
+		//}
+	}
+    
+</script>

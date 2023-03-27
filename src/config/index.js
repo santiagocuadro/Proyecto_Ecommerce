@@ -3,6 +3,7 @@ dotenv.config();
 
 const PRODUCTS_FILENAME = "products";
 const CARTS_FILENAME = "carts";
+const CHAT_FILENAME = "chat";
 
 const config = {
   SERVER: {
@@ -16,6 +17,7 @@ const config = {
     filesystem: {
       PRODUCTS_FILENAME,
       CARTS_FILENAME,
+      CHAT_FILENAME
     },
     mongo: {
       url: process.env.MONGO_DB_URL,
@@ -25,7 +27,14 @@ const config = {
   EMAIL: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD
-  }
+  },
+  WPP: {
+    SID: process.env.WPP_SID,
+    PASS: process.env.WPP_PASS,
+    NUMBER: process.env.WPP_NUMBER
+  },
+  ADMIN_NUMBER: process.env.ADMIN_NUMBER,
+  CLUSTER: process.env.CLUSTER,
 };
 
 export { config };

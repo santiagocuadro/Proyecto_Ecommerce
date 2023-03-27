@@ -24,6 +24,10 @@ router.get("/faillogin", SessionController.getFaillogin);
 
 router.post('/productos', SessionController.postProductos);
 
+router.get("/carrito",SessionController.getCarrito);
+
+router.get("/carritoPedido",SessionController.getCarritoPedido);
+
 
 
 export { router as routerSession } 

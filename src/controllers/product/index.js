@@ -5,6 +5,9 @@ import {	DATE_UTILS,
   				LOGGER_UTILS } from '../../utils/index.js';
 
 
+/**
+ * Me permite listar todos los productos disponibles
+ */
 const getAll = async (req, res) => {
   try {
     const product = await ProductDao.getAll();
@@ -15,10 +18,15 @@ const getAll = async (req, res) => {
 
     res.status(200).send(product);
   } catch (error) {
+    await LOGGER_UTILS.addLog(error);
     res.send({ error: "Internal server error" });
   }
 };
 
+/**
+ * Me permite listar todos los productos disponibles o un producto por su id
+ * (disponible para usuarios y administradores)
+ */
 const getById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -31,10 +39,15 @@ const getById = async (req, res) => {
       res.status(200).send(product);
     }
   } catch (error) {
+    await LOGGER_UTILS.addLog(error);
     res.send({success: false});
   }
 };
 
+/**
+ * Para incorporar productos al listado
+ * (disponible para administradores)
+ */
 const createProduct = async (req, res) => {
   try {
     const { title, description, code, thumbnail, price, stock } = req.body;
@@ -55,13 +68,15 @@ const createProduct = async (req, res) => {
 
     res.status(200).send(createdProduct);
   } catch (error) {
-    // no seria recomendable guardar logs de errores de input de usuario, que genera joi
-    // normalmente guardariamos errores propios e internos del servidor
     await LOGGER_UTILS.addLog(error);
     res.status(400).send(error);
   }
 };
 
+/**
+ * Actualiza un producto por su id
+ * (disponible para administradores)
+ */
 const updateById = async (req, res) => {
 	try {
     const { id } = req.params;
@@ -73,10 +88,15 @@ const updateById = async (req, res) => {
 
     res.status(200).send({ updatedProduct });
   } catch (error) {
+    await LOGGER_UTILS.addLog(error);
     res.status(400).send({ success: false});
   }
 }
 
+/**
+ * Borra un producto por su id
+ * (disponible para administradores)
+ */
 const deleteById = async (req, res) => {
 	try {
     const { id } = req.params;

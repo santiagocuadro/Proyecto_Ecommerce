@@ -5,19 +5,20 @@
         <h1 class="alert alert-success">
             Bienvenido, 
             {{ username }}
-                <button class="btn btn-warning float-right mt-2" onclick="location.href='/api/productos'">
-                    ir a productos
-                </button>
-            
+
                 <button class="btn btn-warning float-right mt-2" onclick="location.href='/logout'">
                     Desloguear
                 </button>
+
+                <button class="btn btn-warning float-right mt-2" onclick="location.href='/carrito'">Ir al carrito</button>
         </h1>
     </div>
 
     <section>
-        <h2 class="text-primary">Ingrese producto</h2>
-        {{> form metodo='POST' action='/productos' }}
+        {{#if admin}}
+            <h2 class="text-primary">Ingrese producto</h2>
+            {{> form metodo='POST' action='/productos' }}
+        {{/if}}
     </section>
 
     <section class="mt-5">
@@ -27,7 +28,7 @@
         {{else}}
         <table class="table table-dark">
             <thead>
-                <tr class="text-warning">
+                <tr >
                     <th>Nombre</th>
                     <th>Descripcion</th>
                     <th>Codigo</th>
@@ -48,7 +49,7 @@
                     <td> {{this.price}} </td>
                     <td> {{this.stock}} </td>
                     <td> {{this.timestamp}} </td>
-                    <td> <button class="btn btn-warning float-right mt-2" id="btnAgregar">agregar</button> </td>
+                    <td> <button class="btn btn-warning float-right mt-2" onclick='addProduct(event)' value="{{this._id}}"> Agregar </button> </td>
                 </tr>
                 {{/each}}
             </tbody>
@@ -57,42 +58,26 @@
         {{/unless}}
     </section>
 
-    <section class="mt-5">
-        <h2 class="text-danger">Productos agregados al carrito</h2>
-        {{#unless carrito}}
-        <h4 class="text-bg-danger p-3">no se encontraron datos</h4>
-        {{else}}
-        <table class="table table-dark">
-            <thead>
-                <tr class="text-warning">
-                    <th>Nombre</th>
-                    <th>Descripcion</th>
-                    <th>Codigo</th>
-                    <th>Foto</th>
-                    <th>Precio</th>
-                    <th>stock</th>
-                    <th>Fecha de creacion</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each carrito}}
-                <tr>
-                    <td> {{this.title}} </td>
-                    <td> {{this.description}} </td>
-                    <td> {{this.code}} </td>
-                    <td> <img style="height: 3rem;" src="{{this.thumbnail}}" alt="imagen producto"> </td>
-                    <td> {{this.price}} </td>
-                    <td> {{this.stock}} </td>
-                    <td> {{this.timestamp}} </td>
-                    <td> <button class="btn btn-warning float-right mt-2" method="POST" onclick="location.href='/productos'">eliminar</button> </td>
-                </tr>
-                {{/each}}
-            </tbody>
-
-        </table>
-        {{/unless}}
-    </section>
 </div>
 
-<script src="../js/index.js" type="module"></script>
+<script>
+    async function addProduct(event) {
+        event.preventDefault();
+
+        const id = event.target.value;
+        const product = { productId: id }
+        
+        const response = await fetch("/api/carrito/productos", {
+            body: JSON.stringify(product),
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+    
+</script>
+
+
+
+

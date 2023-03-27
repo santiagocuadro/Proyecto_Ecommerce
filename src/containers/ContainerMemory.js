@@ -3,10 +3,19 @@ class ContainerMemory {
     this.elements = [];
   }
 
+  /**
+   * 
+   * @returns Devuelve todos los elementos almacenados
+   */
   getAll() {
     return this.elements;
   }
 
+  /**
+   * 
+   * @param {*} element 
+   * @returns Devuelve el elemento a guardar
+   */
   save(element) {
     element.id =
       this.elements.length === 0
@@ -18,6 +27,11 @@ class ContainerMemory {
     return element;
   }
 
+  /**
+   * 
+   * @param {*} id 
+   * @returns Devuelve el elemento con el id buscado
+   */
   getById(id) {
     return this.elements.find((element) => element.id === id);
   }
@@ -37,6 +51,10 @@ class ContainerMemory {
     return this.elements[elementIndex];
   }
 
+  /**
+   * Elimina el elemento con el id 
+   * @param {*} id 
+   */
   deleteById(id) {
     this.elements.filter((element) => element.id != id);
     return { success: true };

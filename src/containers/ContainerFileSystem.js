@@ -6,7 +6,12 @@ class ContainerFileSystem {
     this.nombreArchivo = `./src/db/${nombre}.json`;
   }
 
-  // Recibe objeto, lo guarda en el archivo y devuelve el id asignado
+  /**
+   * 
+   * @param {*} obj 
+   * lo guarda en el archivo
+   * @returns el id asignado
+   */
   async save(obj) {
     try {
       const arrayObj = await this.getAll();
@@ -29,7 +34,11 @@ class ContainerFileSystem {
     }
   }
 
-  // Recibe un id y devuelve el objeto con ese id, o null si no esta
+  /**
+   * 
+   * @param {*} id 
+   * @returns el objeto con ese id, o null si no esta
+   */
   async getById(id) {
     try {
       const elements = await this.getAll();
@@ -43,7 +52,10 @@ class ContainerFileSystem {
     }
   }
 
-  // Devuelve un array con los objetos presentes en el archivo
+  /**
+   * 
+   * @returns array con los objetos presentes en el archivo
+   */
   async getAll() {
     try {
       const file = await fs.promises.readFile(this.nombreArchivo, "utf8");
@@ -58,7 +70,12 @@ class ContainerFileSystem {
     }
   }
 
-  // Elimina del archivo el objeto con el id buscado
+  /**
+   * 
+   * @param {*} number 
+   * @returns 
+   * Elimina del archivo el objeto con el id buscado
+   */
   async deleteById(number) {
     try {
       let archivo = await this.getAll();
@@ -76,7 +93,9 @@ class ContainerFileSystem {
     }
   }
 
-  // Elimina todos los objetos presentes en el archivo
+  /**
+   * Elimina todos los objetos presentes en el archivo
+   */
   async deleteAll() {
     try {
       await fs.promises.writeFile(
@@ -88,6 +107,13 @@ class ContainerFileSystem {
     }
   }
 
+  /**
+   * 
+   * @param {*} id 
+   * @param {*} newData 
+   * Acualiza el objeto con el id por newData
+   * @returns newData
+   */
   async updateById(id, newData) {
     let archivo = await this.getAll();
     const foundElementIndex = archivo.findIndex(
