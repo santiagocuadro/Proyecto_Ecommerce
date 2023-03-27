@@ -162,16 +162,14 @@ const getCarritoPedido = async (req, res) => {
       let html = ``;
       productos.forEach(element => {
         html += '<img style="height: 3rem;" src="{{'+element.thumbnail+'}}" alt="imagen producto">'+
-                '<h4>'+element.title+' <h4>'+
-                '<h4>'+element.description+'<h4>'+
-                '<h4>'+element.code+'<h4>'+
-                '<h4>'+element.price+'<h4>'+
-                '<h4>'+element.stock+'<h4>';
+                '<h4> Nombre:'+element.title+' <h4>'+
+                '<h4> Descripcion: '+element.description+'<h4>'+
+                '<h4> Codigo:'+element.code+'<h4>'+
+                '<h4> Precio: $'+element.price+'<h4>'+
+                '<h4> Stock: '+element.stock+'<h4>';
       });
-
-      // enviarWpp(user.tel, `Nuevo pedido de ${user.name}, email: ${user.email} :`);
+      enviarWpp(user.telephone, `Nuevo pedido de ${user.name}, email: ${user.email} :`);
       enviarEmail(config.ADMIN_EMAIL, `Nuevo pedido de ${user.name}, email: ${user.email} :`, html);
-      
       pedidoRealizado = true;
     }
 

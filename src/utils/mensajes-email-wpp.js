@@ -35,7 +35,7 @@ const enviarWpp = (destino, mensaje) => {
 
 	client.messages.create({
 		body: mensaje,
-		from: config.WPP.NUMBER,
+		from: config.ADMIN_NUMBER,
 		to: destino
 	})
 }

@@ -28,7 +28,7 @@ const init = () => {
       async (req, email, password, done) => {
         try {
           if (!email || !password) return done(null, false);
-          
+
           const user = await UserDao.getOne({ email: email });
 
           if (!user || !validatePassword(user, password)) {

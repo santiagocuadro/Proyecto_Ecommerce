@@ -25,13 +25,12 @@ const config = {
     },
   },
   EMAIL: {
-    user: process.env.EMAIL_USER,
+    user: process.env.ADMIN_EMAIL,
     pass: process.env.EMAIL_PASSWORD
   },
   WPP: {
     SID: process.env.WPP_SID,
     PASS: process.env.WPP_PASS,
-    NUMBER: process.env.WPP_NUMBER
   },
   ADMIN_NUMBER: process.env.ADMIN_NUMBER,
   ADMIN_EMAIL: process.env.ADMIN_EMAIL,
