@@ -65,7 +65,6 @@ const addProductToCart = async (req, res) => {
       return res.send({ success: false, message: "No existe este carrito" });
     }
     
-
     const product = await ProductDao.getById(productId);
 
     if (!product) {
@@ -96,13 +95,11 @@ const delateProduct = async (req, res) => {
       return res.send({ success: false, message: "Carrito no encontrado" });
     }
     
-    const index = cart.products.findIndex((element) => element._id === id_prod);
-    console.log(cart.products[0]._id);
-    console.log(id_prod);
+    const index = cart.products.findIndex((element) => JSON.stringify(element._id) === JSON.stringify(id_prod));
 
     if (index === -1) return res.status(401).send({success: false, message: "producto no encontrado"});
 
-    cart.products = cart.products.filter((element) => element.id !== id_prod);
+    cart.products = cart.products.filter((element) => JSON.stringify(element._id) !== JSON.stringify(id_prod));
     await CartDao.updateById(id, cart);
 
     res.status(200).send({ success: true , cartProducts: cart.products });

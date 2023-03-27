@@ -38,6 +38,7 @@ const init = () => {
           const userResponse = {
             id: user._id,
             email: user.email,
+            tel: user.telephone,
             cart: user.cart,
           };
 

@@ -34,6 +34,7 @@ const config = {
     NUMBER: process.env.WPP_NUMBER
   },
   ADMIN_NUMBER: process.env.ADMIN_NUMBER,
+  ADMIN_EMAIL: process.env.ADMIN_EMAIL,
   CLUSTER: process.env.CLUSTER,
 };
 

@@ -65,8 +65,8 @@
         event.preventDefault();
 
         const id = event.target.value;
-        const product = { productId: id }
-        
+        const product = { productId: id };
+
         const response = await fetch("/api/carrito/productos", {
             body: JSON.stringify(product),
             method: "POST",

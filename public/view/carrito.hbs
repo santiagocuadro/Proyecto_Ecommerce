@@ -16,8 +16,12 @@
 
 	<section class="mt-5">
 		<h2 class="text-danger">Productos agregados al carrito</h2>
-		{{#unless carrito}}
-		<h4 class="text-bg-danger p-3">no se encontraron datos</h4>
+		{{#unless carrito }}
+			{{#if pedidoRealizado}}
+				<h4 class="text-bg-danger p-3">Pedido enviado con exito</h4>
+				{{else}}
+					<h4 class="text-bg-danger p-3">no se encontraron datos</h4>
+			{{/if}}
 		{{else}}
 		<table class="table table-dark">
 				<thead>
@@ -42,7 +46,7 @@
 								<td> {{this.price}} </td>
 								<td> {{this.stock}} </td>
 								<td> {{this.timestamp}} </td>
-								<td> <button class="btn btn-warning float-right mt-2" onclick='deleteCart(event)' value="{{this._id}}">eliminar</button> </td>
+								<td> <button class="btn btn-warning float-right mt-2" onclick='deleteProduct(event)' value="{{this._id}}">eliminar</button> </td>
 						</tr>
 						{{/each}}
 				</tbody>
@@ -55,21 +59,18 @@
 </div>
 
 <script>
-	async function deleteCart(event) {
+	async function deleteProduct(event) {
 		event.preventDefault();
 
 		const id_prod = event.target.value;
 
 		const response = await fetch(`/api/carrito/productos/${id_prod}`, {
 			method: "DELETE",
-			headers: {
-				'Content-Type': 'application/json'
-      },
 		});
 		
-		//if(response.status === 200){
-		//	return window.location.replace("/carrito");
-		//}
+		if(response.status === 200){
+			window.location.replace("/carrito");
+		}
 	}
     
 </script>
