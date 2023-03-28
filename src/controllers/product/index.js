@@ -13,13 +13,13 @@ const getAll = async (req, res) => {
     const product = await ProductDao.getAll();
 
     if (!product) {
-      return res.status(400).send({ error: ERRORS_UTILS.MESSAGES.NO_PRODUCT });
+      return res.status(404).send({ error: ERRORS_UTILS.MESSAGES.NO_PRODUCT });
     }
 
     res.status(200).send(product);
   } catch (error) {
     await LOGGER_UTILS.addLog(error);
-    res.send({ error: "Internal server error" });
+    res.status(400).send({ error: "Internal server error" });
   }
 };
 
@@ -32,7 +32,7 @@ const getById = async (req, res) => {
     const { id } = req.params;
 
     if(id !== undefined){
-      const product = await ProductDao.getById(Number(id));  
+      const product = await ProductDao.getById(id);  
       res.status(200).send({product: product});
     }else {
       const product = await ProductDao.getAll();  
@@ -40,7 +40,7 @@ const getById = async (req, res) => {
     }
   } catch (error) {
     await LOGGER_UTILS.addLog(error);
-    res.send({success: false});
+    res.status(400).send({success: false});
   }
 };
 
@@ -66,7 +66,7 @@ const createProduct = async (req, res) => {
 
     const createdProduct = await ProductDao.save(product);
 
-    res.status(200).send(createdProduct);
+    res.status(201).send(createdProduct);
   } catch (error) {
     await LOGGER_UTILS.addLog(error);
     res.status(400).send(error);

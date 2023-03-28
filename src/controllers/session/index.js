@@ -170,6 +170,10 @@ const getCarritoPedido = async (req, res) => {
       });
       enviarWpp(user.telephone, `Nuevo pedido de ${user.name}, email: ${user.email} :`);
       enviarEmail(config.ADMIN_EMAIL, `Nuevo pedido de ${user.name}, email: ${user.email} :`, html);
+      const orden = {timestamp: DATE_UTILS.getTimestamp(), products: productos, emailDestino: user.email};
+      const ordenGueardada = await OrdenDao.save(orden);
+      console.log(ordenGueardada);
+
       pedidoRealizado = true;
     }
 

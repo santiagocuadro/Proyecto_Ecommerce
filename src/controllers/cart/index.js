@@ -28,7 +28,7 @@ const createCart = async (req, res) => {
     const baseCart = { timestamp: DATE_UTILS.getTimestamp(), products: [] };
     const cart = await CartDao.save(baseCart);
 
-    res.status(200).json({ success: true, cartId: cart.id });
+    res.status(201).json({ success: true, cartId: cart.id });
   } catch (error) {
     await LOGGER_UTILS.addLog(error);
     res.status(400).send({ success: false});
@@ -62,13 +62,13 @@ const addProductToCart = async (req, res) => {
     const cart = await CartDao.getById(id);
 
     if (!cart) {
-      return res.send({ success: false, message: "No existe este carrito" });
+      return res.status(404).send({ success: false, message: "No existe este carrito" });
     }
     
     const product = await ProductDao.getById(productId);
 
     if (!product) {
-      return res.status(401).send({ success: false, message: "No existe este producto" });
+      return res.status(404).send({ success: false, message: "No existe este producto" });
     }
       
     cart.products.push(product);
